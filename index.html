@@ -13,7 +13,7 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--bg:#0E1426;--surface:#161E36;--ink:#E8ECF8;--muted:#9AA5C3;--line:#2A3556;--accent:#7C9BFF;--accent-ink:#0E1426;--amber:#F2B134;--teal:#3CC6B0;--code:#0A1020;color-scheme:dark}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+body{margin:0;background:var(--bg) radial-gradient(color-mix(in srgb,var(--line) 75%,transparent) 1px,transparent 1.5px) 0 0/26px 26px;color:var(--ink);font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
 h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;line-height:1.1;margin:0}
 a{color:var(--accent)}
 :focus-visible{outline:3px solid var(--amber);outline-offset:2px}
@@ -78,21 +78,57 @@ td.num{font-variant-numeric:tabular-nums}
 footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
 #toast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* side data-art */
+.side{position:fixed;top:0;bottom:0;width:max(0px,calc((100vw - 960px)/2 - 12px));pointer-events:none;overflow:hidden;display:none;z-index:-1}
+.side.l{left:0}.side.r{right:0}
+@media (min-width:1180px){.side{display:block}}
+.bars{position:absolute;left:12px;right:12px;bottom:0;height:38%;display:flex;align-items:flex-end;gap:5px;border-bottom:2px solid var(--line)}
+.bars i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(var(--accent),transparent);opacity:.4;transform-origin:bottom;animation:grow 3.5s ease-in-out infinite alternate}
+.tk{position:absolute;font:500 13px "IBM Plex Mono",ui-monospace,monospace;color:var(--accent);opacity:.5;white-space:nowrap;animation:fl 7s ease-in-out infinite alternate}
+.dt{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--amber);opacity:.5;animation:fl 5s ease-in-out infinite alternate}
+.donut{position:absolute;left:0;right:0;margin:0 auto;top:6%;width:min(100px,78%);aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--accent) 0 42%,var(--teal) 0 70%,var(--amber) 0 100%);-webkit-mask:radial-gradient(circle,transparent 38%,#000 39%);mask:radial-gradient(circle,transparent 38%,#000 39%);opacity:.5;animation:spin 40s linear infinite}
+.ln{position:absolute;left:10%;width:80%;top:26%;height:18%;fill:none;stroke:var(--teal);stroke-width:2;stroke-dasharray:400;opacity:.6;animation:draw 6s ease-in-out infinite alternate}
+@keyframes grow{from{transform:scaleY(.55)}to{transform:scaleY(1)}}
+@keyframes fl{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+@keyframes draw{from{stroke-dashoffset:400}to{stroke-dashoffset:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* resume, contact, progress */
+#prog{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--teal));z-index:40}
+.card .btn{padding:9px 14px;font-size:14px}
+#resume{width:min(780px,calc(100% - 24px));max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px));padding:0;border:0;border-radius:14px;background:#fff;color:#16203A;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+#resume::backdrop{background:rgba(10,16,32,.6);backdrop-filter:blur(3px)}
+.rtool{position:sticky;top:0;display:flex;gap:8px;justify-content:flex-end;padding:10px 14px;background:#F2F5FA;border-bottom:1px solid #D9DFEB}
+.rtool .btn.alt{color:#16203A;border-color:#B8C2D8}
+.rdoc{padding:26px clamp(18px,5vw,34px) 32px;font-size:14.5px;line-height:1.55}
+.rdoc h1{font-size:clamp(26px,6vw,32px);letter-spacing:-.01em}
+.rdoc .rr{margin:4px 0 2px;font-weight:500;color:#2F5BEA}
+.rdoc .rc{margin:0 0 6px;color:#5A6580;font-size:13px}
+.rdoc h4{font:700 12px "IBM Plex Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2F5BEA;border-bottom:1px solid #D9DFEB;padding-bottom:4px;margin:20px 0 8px}
+.rdoc p{margin:6px 0}.rdoc ul{margin:4px 0 8px;padding-left:20px}.rdoc li{margin:3px 0}
+@media print{body>*:not(#resume){display:none!important}body::before{display:none}#resume{position:static;display:block;width:auto;max-height:none;overflow:visible;box-shadow:none;margin:0}.rtool{display:none}}
+/* interactive name */
+#name{display:inline-flex;position:relative;padding-bottom:44px;cursor:default;user-select:none;touch-action:pan-y}
+#name .sp{display:inline-block;width:.28em}
+#name .ch{--p:0;position:relative;display:inline-block;transform:translateY(calc(var(--p)*-12px)) scale(calc(1 + var(--p)*.2)) rotate(calc(var(--p)*-5deg));color:color-mix(in srgb,var(--accent) calc(var(--p)*100%),var(--ink));will-change:transform}
+#name u{position:absolute;left:14%;right:14%;top:100%;margin-top:8px;height:calc(3px + var(--p)*30px);border-radius:3px;background:linear-gradient(var(--accent),var(--teal));opacity:calc(.35 + var(--p)*.65);text-decoration:none}
+#cap{display:block;font:500 13px "IBM Plex Mono",ui-monospace,monospace;color:var(--muted);min-height:20px;margin:-6px 0 10px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
+<div class="side l" id="sl" aria-hidden="true"></div><div class="side r" id="sr" aria-hidden="true"></div>
 <header class="nav"><div class="wrap">
 <b>Bhargava P M</b>
-<a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">Education</a><a href="#contact">Contact</a>
+<a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">Education</a><a href="#contact">Contact</a><button class="ghost" id="rv2">Resume</button>
 <button class="ghost" id="theme" aria-label="Toggle light and dark theme">Theme</button>
 </div></header>
 
 <main>
 <section class="hero"><div class="wrap">
-<h1>Bhargava P M</h1>
+<h1 id="name">Bhargava P M</h1>
+<span id="cap" aria-hidden="true"></span>
 <p class="lead">Entry-level data analyst. I clean messy tables, query them with SQL, and turn the results into clear answers a team can act on.</p>
-<div class="row"><a class="btn" href="#contact">Get in touch</a><a class="btn alt" href="#projects">See my projects</a></div>
+<div class="row"><a class="btn" href="#contact">Get in touch</a><a class="btn alt" href="#projects">See my projects</a><button class="btn alt" id="rv">View resume</button></div>
 <div class="facts"><span>MCA 2026, Davanagere University</span><span>SQL · Excel · Python · Power BI</span><span>Davanagere, Karnataka</span></div>
 
 </div></section>
@@ -126,14 +162,60 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 
 <section id="contact"><div class="wrap">
 <h2>Let's talk</h2>
-<p class="sub">I'm looking for an entry-level Data Analyst role. The quickest way to reach me is email.</p>
-<div class="row">
-<a class="btn" href="mailto:bhargava.maheshwar@gmail.com?subject=Data%20Analyst%20opportunity">Email me</a>
-<button class="btn alt" id="copy">Copy email address</button>
+<p class="sub">I'm looking for an entry-level Data Analyst role. Reach me whichever way suits you.</p>
+<div class="grid">
+<div class="card"><h3>Email</h3><p class="note" style="margin:0 0 12px">bhargava.maheshwar@gmail.com</p><div class="row"><a class="btn" href="mailto:bhargava.maheshwar@gmail.com?subject=Data%20Analyst%20opportunity">Email me</a><button class="btn alt" id="copy">Copy</button></div></div>
+<div class="card"><h3>Phone</h3><p class="note" style="margin:0 0 12px">+91 70193 01773</p><div class="row"><a class="btn" href="tel:+917019301773">Call</a><a class="btn alt" href="https://wa.me/917019301773" target="_blank" rel="noopener">WhatsApp</a><button class="btn alt" id="copyph">Copy</button></div></div>
+<div class="card"><h3>LinkedIn</h3><p class="note" style="margin:0 0 12px">bhargava-p-m</p><div class="row"><a class="btn" href="https://www.linkedin.com/in/bhargava-p-m-65511a224/" target="_blank" rel="noopener">View profile</a></div></div>
 </div>
 </div></section>
 </main>
 <footer><div class="wrap">Bhargava P M · Davanagere, Karnataka, India</div></footer>
+<dialog id="resume" aria-label="Resume">
+<div class="rtool"><button class="btn" id="rprint">Print / Save as PDF</button><button class="btn alt" id="rclose">Close</button></div>
+<div class="rdoc">
+<h1>BHARGAVA P M</h1>
+<p class="rr">Data Analyst · SQL · Excel · Python · Power BI</p>
+<p class="rc">Davanagere, Karnataka, India · bhargava.maheshwar@gmail.com · +91 70193 01773 · linkedin.com/in/bhargava-p-m-65511a224</p>
+<h4>Professional summary</h4>
+<p>MCA graduate with hands-on experience in data analysis, data cleaning, transformation, exploratory analysis, and reporting using SQL, Excel, Python, Pandas, and Power BI. Skilled in SQL joins, CTEs, window functions, subqueries, and aggregations, with practical experience analyzing employee and customer transaction data to identify trends, patterns, and business insights. Seeking an entry-level Data Analyst opportunity.</p>
+<h4>Technical skills</h4>
+<ul>
+<li><b>Data analysis:</b> Data cleaning, transformation, EDA, validation, visualization, reporting, business insights</li>
+<li><b>SQL:</b> MySQL, joins, CTEs, subqueries, window functions, aggregations, filtering, sorting</li>
+<li><b>Excel:</b> XLOOKUP, VLOOKUP, pivot tables, advanced formulas, data validation, Power Query</li>
+<li><b>Power BI:</b> Power Query, data modeling, dashboard design</li>
+<li><b>Python:</b> Pandas, NumPy, data cleaning, transformation, EDA</li>
+<li><b>Tools:</b> MySQL, VS Code</li>
+</ul>
+<h4>Project experience</h4>
+<p><b>Employee Data Analysis</b> · Python, Pandas, SQL, Excel</p>
+<ul>
+<li>Analyzed employee data to identify workforce distribution, salary patterns, experience levels, and performance trends.</li>
+<li>Cleaned and transformed employee records using Python and Pandas to improve dataset consistency.</li>
+<li>Developed SQL queries with aggregations and filtering for department-level employee counts, average salaries, and performance metrics.</li>
+<li>Created charts and summary reports to communicate workforce and HR insights.</li>
+</ul>
+<p><b>Bank Customer Transaction Analysis</b> · Python, Pandas, SQL</p>
+<ul>
+<li>Analyzed transaction data to identify patterns, customer behavior, and high-value customer segments.</li>
+<li>Handled missing values, duplicate records, and inconsistent date formats using Pandas.</li>
+<li>Applied SQL joins, filtering, grouping, aggregation, and sorting for customer-level and transaction-level insights.</li>
+<li>Identified high-value customers, transaction trends, and differences across transaction types.</li>
+</ul>
+<h4>Certification</h4>
+<p>Python with Data Analytics, Q-Spiders</p>
+<h4>Education</h4>
+<ul>
+<li><b>MCA</b>, 2026, Davanagere University · CGPA 8.02</li>
+<li><b>BCA</b>, 2024, Bapuji Institute of Hi-Tech Education · CGPA 8.33</li>
+<li><b>XII</b>, 2021, S S J V P Govt PU College · 78%</li>
+<li><b>X</b>, 2019, SSJVP Govt High School · 86.56%</li>
+</ul>
+<p><b>Languages:</b> Kannada, English</p>
+</div>
+</dialog>
+<div id="prog" aria-hidden="true"></div>
 <div id="toast" role="status"></div>
 
 <script>
@@ -166,6 +248,50 @@ let pi=0,pk='Goal';
 function showP(i){pi=i;const p=P[i];tabs($('#ptabs'),P.map(x=>x.t),0,showP,i);
 $('#pbody').innerHTML='<div>'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>'+['Goal','How','Output'].map(k=>'<h3 style="font-size:17px;margin-top:14px">'+({Goal:'What I wanted to learn',How:'What I did',Output:'What it produced'})[k]+'</h3><ul>'+p[k].map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')}
 showP(0);
+
+// side data-art
+(function(){
+const bars=n=>'<div class="bars">'+Array.from({length:n},(_,i)=>'<i style="height:'+(28+(i*41)%64)+'%;animation-delay:-'+(i*.8).toFixed(1)+'s"></i>').join('')+'</div>';
+const tk=(a,t,l,d)=>'<span class="tk" style="top:'+t+'%;left:'+l+'%;animation-delay:-'+d+'s">'+a+'</span>';
+$('#sl').innerHTML=tk('SELECT',8,6,0)+tk('JOIN',17,20,2)+tk('GROUP BY',27,8,4)+tk('AVG()',36,22,6)+tk('COUNT(*)',44,6,8)+bars(7);
+let dots='';for(let i=0;i<12;i++)dots+='<span class="dt" style="left:'+(10+(i*47)%76)+'%;top:'+(74+(i*31)%22)+'%;animation-delay:-'+(i*.6).toFixed(1)+'s"></span>';
+$('#sr').innerHTML='<div class="donut"></div><svg class="ln" viewBox="0 0 100 50" preserveAspectRatio="none"><polyline vector-effect="non-scaling-stroke" points="0,40 14,30 28,34 42,18 56,24 70,10 84,16 100,4"/></svg>'+tk('Σx',52,12,1)+tk('μ',60,58,3)+tk('R²',68,20,5)+dots;
+})();
+
+// interactive name
+(function(){
+const el=$('#name'),cap=$('#cap'),txt='Bhargava P M',W=['Clean data','Transform','Query','Analyse','Visualise','Tell the story'];
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+el.setAttribute('aria-label',txt);el.textContent='';
+const L=[];
+[...txt].forEach(c=>{const s=document.createElement('span');if(c===' ')s.className='sp';else{s.className='ch';s.setAttribute('aria-hidden','true');s.append(c,document.createElement('u'));L.push({s,p:0})}el.append(s)});
+let px=null,py=0,last='';
+el.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY});
+el.addEventListener('pointerleave',()=>{px=null});
+el.addEventListener('pointercancel',()=>{px=null});
+function tick(t){
+const er=el.getBoundingClientRect();
+L.forEach((o,i)=>{let g;
+if(px===null)g=rm?0:.1+.1*Math.sin(t/700-i*.55);
+else{const dx=px-(er.left+o.s.offsetLeft+o.s.offsetWidth/2),dy=(py-(er.top+o.s.offsetTop+o.s.offsetHeight/2))*.5;g=Math.exp(-(dx*dx+dy*dy)/9000)}
+o.p+=(g-o.p)*.16;o.s.style.setProperty('--p',o.p.toFixed(3))});
+const w=px===null?'↔ move across my name':W[Math.min(W.length-1,Math.max(0,Math.floor((px-er.left)/er.width*W.length)))];
+if(w!==last){cap.textContent=w;last=w}
+requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+})();
+
+// resume, phone copy, progress bar
+(function(){
+const rd=$('#resume');
+['#rv','#rv2'].forEach(s=>$(s).onclick=()=>rd.showModal());
+$('#rclose').onclick=()=>rd.close();
+rd.addEventListener('click',e=>{if(e.target===rd)rd.close()});
+$('#rprint').onclick=()=>{try{window.print()}catch(e){toast('Use your browser print menu')}};
+$('#copyph').onclick=async()=>{try{await navigator.clipboard.writeText('+917019301773');toast('Number copied')}catch(e){toast('+91 70193 01773')}};
+const pg=$('#prog');
+addEventListener('scroll',()=>{const h=document.documentElement;pg.style.width=(h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight)*100)+'%'},{passive:true});
+})();
 
 </script>
 </body>
