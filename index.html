@@ -105,7 +105,8 @@ footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
 .rdoc .rc{margin:0 0 6px;color:#5A6580;font-size:13px}
 .rdoc h4{font:700 12px "IBM Plex Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2F5BEA;border-bottom:1px solid #D9DFEB;padding-bottom:4px;margin:20px 0 8px}
 .rdoc p{margin:6px 0}.rdoc ul{margin:4px 0 8px;padding-left:20px}.rdoc li{margin:3px 0}
-@media print{body>*:not(#resume){display:none!important}body::before{display:none}#resume{position:static;display:block;width:auto;max-height:none;overflow:visible;box-shadow:none;margin:0}.rtool{display:none}}
+@page{size:A4;margin:9mm}
+@media print{html,body{height:auto!important;min-height:0!important;background:#fff!important;margin:0!important;padding:0!important}:root{padding:0!important}body>*:not(#resume){display:none!important}body::before{display:none!important}#resume{position:static!important;display:block;width:auto;height:auto;max-height:none;overflow:visible;box-shadow:none;border-radius:0;margin:0;color:#000}.rtool{display:none!important}.rdoc{padding:0;font-size:9.5pt;line-height:1.35}.rdoc h1{font-size:19pt}.rdoc h4{margin:8pt 0 3pt;font-size:8pt}.rdoc p{margin:2pt 0}.rdoc ul{margin:2pt 0 3pt;padding-left:14pt}.rdoc li{margin:1pt 0}.rdoc li,.rdoc p{break-inside:avoid}}
 /* interactive name */
 #name{display:inline-flex;position:relative;padding-bottom:44px;cursor:default;user-select:none;touch-action:pan-y}
 #name .sp{display:inline-block;width:.28em}
