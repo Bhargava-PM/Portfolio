@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bhargava P M · Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F5FA;--surface:#fff;--ink:#16203A;--muted:#5A6580;--line:#D9DFEB;--accent:#2F5BEA;--accent-ink:#fff;--amber:#E8A317;--teal:#14907F;--code:#101A33;--codeink:#DCE4FF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1426;--surface:#161E36;--ink:#E8ECF8;--muted:#9AA5C3;--line:#2A3556;--accent:#7C9BFF;--accent-ink:#0E1426;--amber:#F2B134;--teal:#3CC6B0;--code:#0A1020;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1426;--surface:#161E36;--ink:#E8ECF8;--muted:#9AA5C3;--line:#2A3556;--accent:#7C9BFF;--accent-ink:#0E1426;--amber:#F2B134;--teal:#3CC6B0;--code:#0A1020;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.nav .wrap{display:flex;align-items:center;gap:6px;height:56px;overflow-x:auto}
+.nav b{font:800 18px "Bricolage Grotesque",sans-serif;margin-right:auto;white-space:nowrap}
+.nav a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;font-size:14px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--surface)}
+button{font:inherit;cursor:pointer}
+.ghost{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:11px 18px;font-weight:500;text-decoration:none;display:inline-block}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+section{padding:56px 0 8px}
+h2{font-size:clamp(26px,4vw,36px);margin-bottom:8px}
+.sub{color:var(--muted);margin:0 0 24px;max-width:60ch}
+.hero{padding-top:44px}
+.hero h1{font-size:clamp(44px,9vw,92px);font-weight:800;letter-spacing:-.03em}
+.hero p.lead{font-size:clamp(18px,2.4vw,22px);max-width:34em;margin:16px 0 22px}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--muted);font-size:14px;margin-top:20px}
+/* console */
+.console{margin-top:34px;background:var(--code);color:var(--codeink);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.tabs{display:flex;gap:4px;padding:8px 8px 0;overflow-x:auto;background:rgba(255,255,255,.04)}
+.tabs button{background:none;border:0;color:#9FB0E6;padding:9px 12px;border-radius:8px 8px 0 0;font-size:14px;white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--code);color:#fff;box-shadow:inset 0 -2px var(--amber)}
+pre.sql{margin:0;padding:16px;font:400 14px/1.7 "IBM Plex Mono",ui-monospace,monospace;white-space:pre-wrap;overflow-x:auto}
+pre.sql b{color:#8FB0FF;font-weight:500}
+.bar{display:flex;align-items:center;gap:12px;padding:0 16px 14px}
+.bar small{color:#9FB0E6}
+.run{background:var(--amber);color:#1a1300;border:0;border-radius:8px;padding:8px 16px;font-weight:500}
+.out{background:var(--surface);color:var(--ink);padding:14px 16px;min-height:60px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:500}
+td.num{font-variant-numeric:tabular-nums}
+.meter{display:inline-block;height:8px;border-radius:4px;background:var(--accent);vertical-align:middle;margin-left:8px;transition:width .5s}
+.note{font-size:13px;color:var(--muted);margin:10px 0 0}
+/* cards */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h3{font-size:19px;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:7px 14px;font-size:14px}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.skill{transition:opacity .2s}.skill.dim{opacity:.28}
+.skill ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.pj{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pj .tabs{background:var(--bg);padding:8px 8px 0}
+.pj .tabs button{color:var(--muted)}
+.pj .tabs button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:inset 0 -2px var(--accent)}
+.pj .body{padding:18px}
+.pj ul{margin:8px 0 0;padding-left:20px}.pj li{margin:6px 0}
+.tag{display:inline-block;font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1px 8px;margin:0 6px 6px 0;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:14px}
+.checks label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.tl{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 20px 14px}
+.tl li::before{content:"";position:absolute;left:-26px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.tl small{color:var(--muted)}
+footer{padding:48px 0 40px;color:var(--muted);font-size:14px}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+<b>Bhargava P M</b>
+<a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#about">Education</a><a href="#contact">Contact</a>
+<button class="ghost" id="theme" aria-label="Toggle light and dark theme">Theme</button>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+<h1>Bhargava P M</h1>
+<p class="lead">Entry-level data analyst. I clean messy tables, query them with SQL, and turn the results into clear answers a team can act on.</p>
+<div class="row"><a class="btn" href="#contact">Get in touch</a><a class="btn alt" href="#projects">See my projects</a></div>
+<div class="facts"><span>MCA 2026, Davanagere University</span><span>SQL · Excel · Python · Power BI</span><span>Davanagere, Karnataka</span></div>
+
+</div></section>
+
+<section id="skills"><div class="wrap">
+<h2>Skills</h2>
+<p class="sub">Select a tool to highlight what I do with it.</p>
+<div class="chips" id="chips"></div>
+<div class="grid" id="skillgrid"></div>
+</div></section>
+
+<section id="projects"><div class="wrap">
+<h2>Projects</h2>
+<p class="sub">Two projects, each built end to end: clean, query, summarise.</p>
+<div class="pj">
+<div class="tabs" role="tablist" id="ptabs"></div>
+<div class="body" id="pbody"></div>
+</div>
+</div></section>
+
+<section id="about"><div class="wrap">
+<h2>Education and certification</h2>
+<ul class="tl" style="margin-top:20px">
+<li><b>Master of Computer Applications</b>, 2026<br><small>Davanagere University · CGPA 8.02</small></li>
+<li><b>Python with Data Analytics</b><br><small>Certification, Q-Spiders</small></li>
+<li><b>Bachelor of Computer Applications</b>, 2024<br><small>Bapuji Institute of Hi-Tech Education · CGPA 8.33</small></li>
+<li><b>XII</b>, 2021 · 78% &nbsp;|&nbsp; <b>X</b>, 2019 · 86.56%<br><small>Govt PU College and Govt High School, Santebennuru</small></li>
+</ul>
+<p class="note">Languages: Kannada, English</p>
+</div></section>
+
+<section id="contact"><div class="wrap">
+<h2>Let's talk</h2>
+<p class="sub">I'm looking for an entry-level Data Analyst role. The quickest way to reach me is email.</p>
+<div class="row">
+<a class="btn" href="mailto:bhargava.maheshwar@gmail.com?subject=Data%20Analyst%20opportunity">Email me</a>
+<button class="btn alt" id="copy">Copy email address</button>
+</div>
+</div></section>
+</main>
+<footer><div class="wrap">Bhargava P M · Davanagere, Karnataka, India</div></footer>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)};
+// theme
+(function(){const r=document.documentElement;$('#theme').onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=dark?'light':'dark'}})();
+$('#copy').onclick=async()=>{try{await navigator.clipboard.writeText('bhargava.maheshwar@gmail.com');toast('Email copied')}catch(e){toast('bhargava.maheshwar@gmail.com')}};
+
+function tabs(el,items,get,set,cur){el.innerHTML='';items.forEach((it,i)=>{const b=document.createElement('button');b.role='tab';b.textContent=it;b.setAttribute('aria-selected',i===cur);b.onclick=()=>set(i);el.append(b)})}
+
+// skills
+const SK={SQL:['Joins, CTEs and subqueries','Window functions and aggregations','MySQL, filtering and sorting'],Excel:['XLOOKUP and VLOOKUP','Pivot tables and advanced formulas','Power Query and data validation'],Python:['Pandas and NumPy','Cleaning and transformation','Exploratory data analysis'],'Power BI':['Power Query','Data modeling','Dashboard design']};
+let on=null;
+function drawSkills(){$('#chips').innerHTML='';Object.keys(SK).forEach(k=>{const b=document.createElement('button');b.className='chip';b.textContent=k;b.setAttribute('aria-pressed',on===k);b.onclick=()=>{on=on===k?null:k;drawSkills()};$('#chips').append(b)});
+$('#skillgrid').innerHTML=Object.entries(SK).map(([k,v])=>'<div class="card skill'+(on&&on!==k?' dim':'')+'"><h3>'+k+'</h3><ul>'+v.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>').join('')}
+drawSkills();
+
+// projects
+const P=[
+{t:'Employee Data Analysis',tags:['Python','Pandas','SQL','Excel'],
+ Goal:['Understand workforce distribution, salary patterns, experience levels and performance trends for HR insights.'],
+ How:['Cleaned and transformed employee records with Python and Pandas so the dataset was consistent.','Wrote SQL with aggregations and filters for department-level headcount, average salary and performance metrics.'],
+ Output:['Charts and summary reports that communicate workforce and HR findings.']},
+{t:'Bank Customer Transactions',tags:['Python','Pandas','SQL'],
+ Goal:['Find transaction patterns, customer behaviour and high-value customer segments.'],
+ How:['Handled missing values, duplicate records and inconsistent date formats with Pandas.','Used SQL joins, filtering, grouping, aggregation and sorting for customer-level and transaction-level views.','Calculated totals, averages and per-customer metrics in Pandas.'],
+ Output:['Identified high-value customers, transaction trends, and differences across transaction types.']}];
+let pi=0,pk='Goal';
+function showP(i){pi=i;const p=P[i];tabs($('#ptabs'),P.map(x=>x.t),0,showP,i);
+$('#pbody').innerHTML='<div>'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>'+['Goal','How','Output'].map(k=>'<h3 style="font-size:17px;margin-top:14px">'+({Goal:'What I wanted to learn',How:'What I did',Output:'What it produced'})[k]+'</h3><ul>'+p[k].map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')}
+showP(0);
+
+</script>
+</body>
+</html>
