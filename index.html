@@ -229,7 +229,7 @@ $('#copy').onclick=async()=>{try{await navigator.clipboard.writeText('bhargava.m
 function tabs(el,items,get,set,cur){el.innerHTML='';items.forEach((it,i)=>{const b=document.createElement('button');b.role='tab';b.textContent=it;b.setAttribute('aria-selected',i===cur);b.onclick=()=>set(i);el.append(b)})}
 
 // skills
-const SK={SQL:['Joins, CTEs and subqueries','Window functions and aggregations','MySQL, filtering and sorting'],Excel:['XLOOKUP and VLOOKUP','Pivot tables and advanced formulas','Power Query and data validation'],Python:['Pandas and NumPy','Cleaning and transformation','Exploratory data analysis'],'Power BI':['Power Query','Data modeling','Dashboard design']};
+const SK={SQL:['Joins, CTEs and subqueries','Window functions and aggregations','MySQL, filtering and sorting'],Excel:['XLOOKUP and VLOOKUP','Pivot tables and advanced formulas','Power Query and data validation','MIS Reporting'],Python:['Pandas and NumPy','Cleaning and transformation','Exploratory data analysis'],'Power BI':['Power Query','Data modeling','Dashboard design']};
 let on=null;
 function drawSkills(){$('#chips').innerHTML='';Object.keys(SK).forEach(k=>{const b=document.createElement('button');b.className='chip';b.textContent=k;b.setAttribute('aria-pressed',on===k);b.onclick=()=>{on=on===k?null:k;drawSkills()};$('#chips').append(b)});
 $('#skillgrid').innerHTML=Object.entries(SK).map(([k,v])=>'<div class="card skill'+(on&&on!==k?' dim':'')+'"><h3>'+k+'</h3><ul>'+v.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>').join('')}
