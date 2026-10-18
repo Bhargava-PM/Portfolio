@@ -60,15 +60,19 @@ const v=JSON.parse(localStorage.getItem('adm_vault')),k=await mkKey(u,p,s2b(v.sa
 return JSON.parse(dec.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:s2b(v.iv)},k,s2b(v.ct))))}
 
 /* ---- GitHub ---- */
-const gh=(c,path,opt,raw)=>{opt=opt||{};const h={'Accept':raw?'application/vnd.github.raw+json':'application/vnd.github+json','Authorization':'Bearer '+c.token,'X-GitHub-Api-Version':'2022-11-28'};if(opt.body)h['Content-Type']='application/json';return fetch('https://api.github.com'+path,Object.assign({},opt,{headers:h}))};
+const gh=(c,path,opt,raw)=>{opt=opt||{};const h={'Accept':raw?'application/vnd.github.raw+json':'application/vnd.github+json','Authorization':'Bearer '+c.token,'X-GitHub-Api-Version':'2022-11-28'};if(opt.body)h['Content-Type']='application/json';return fetch('https://api.github.com'+path,Object.assign({cache:'no-store'},opt,{headers:h}))};
 const fpath=c=>'/repos/'+encodeURIComponent(c.owner)+'/'+encodeURIComponent(c.repo)+'/contents/'+c.path.split('/').map(encodeURIComponent).join('/')+'?ref='+encodeURIComponent(c.branch);
 const RE=/(<script type="application\/json" id="site-data">)([\s\S]*?)(<\/script>)/;
 const b64=s=>{const b=enc.encode(s);let r='';for(let i=0;i<b.length;i+=32768)r+=String.fromCharCode.apply(null,b.subarray(i,i+32768));return btoa(r)};
 async function loadSite(c){
-const r=await gh(c,fpath(c));if(!r.ok)throw new Error('Could not read '+c.path+' ('+r.status+'). If your token expired, use "Forget this device" and set up again.');
-const sha=(await r.json()).sha,t=await gh(c,fpath(c),{},true);if(!t.ok)throw new Error('Could not read the file ('+t.status+')');
-const text=await t.text(),m=text.match(RE);if(!m)throw new Error('That file has no portfolio data block. Is it the right file?');
-return{sha,text,data:JSON.parse(m[2])}}
+const url=fpath(c),r=await gh(c,url);
+if(!r.ok)throw new Error('Could not read '+c.path+' ('+r.status+'). If your token expired, use "Forget this device" and set up again.');
+const j=await r.json();let text;
+if(j.content&&j.encoding==='base64')text=dec.decode(Uint8Array.from(atob(j.content.replace(/\s/g,'')),ch=>ch.charCodeAt(0)));
+else{const t=await gh(c,url,{},true);if(!t.ok)throw new Error('Could not read the file ('+t.status+')');text=await t.text()}
+const m=text.match(RE);
+if(!m)throw new Error('No portfolio data block found in '+c.owner+'/'+c.repo+' ('+c.branch+') file "'+c.path+'". GitHub returned '+text.length+' characters starting: '+text.slice(0,70).replace(/\s+/g,' ')+' . If these details are wrong, use "Forget this device" and set up again.');
+return{sha:j.sha,text,data:JSON.parse(m[2])}}
 async function saveSite(){
 const c=S.cfg,cur=await loadSite(c);
 const json=JSON.stringify({skills:SK,projects:P,certs:CERTS}).replace(/</g,'\\u003c');
